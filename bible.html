@@ -136,6 +136,8 @@ html+='<div class="verse-line"><span class="verse-num">'+num+'</span>'+text+'</d
 }
 document.getElementById('bibleText').innerHTML=html;
 totalVerses=verses.length;
+verseLengths=verses.map(function(ve){return (ve.text||ve.content||'').length||1;});
+buildTimestamps();
 var audioFile=getAudioFile(book,ch);
 var player=document.getElementById('audioPlayer');
 if(audioFile){player.src=audioFile;}
@@ -150,14 +152,30 @@ document.getElementById('bibleText').innerHTML='<div style="color:var(--text3);p
 xhr.send();
 }
 var totalVerses=0;
+var verseLengths=[];
+var verseTimestamps=[];
 var highlightInterval=null;
+function buildTimestamps(){
+var total=0;
+for(var i=0;i<verseLengths.length;i++)total+=verseLengths[i];
+var t=0;
+verseTimestamps=[];
+for(var i=0;i<verseLengths.length;i++){
+verseTimestamps.push(t/total);
+t+=verseLengths[i];
+}
+verseTimestamps.push(1.0);
+}
 function startHighlight(){
 var player=document.getElementById('audioPlayer');
 if(highlightInterval)clearInterval(highlightInterval);
 highlightInterval=setInterval(function(){
 if(player.paused||player.duration===0)return;
 var progress=player.currentTime/player.duration;
-var idx=Math.floor(progress*totalVerses);
+var idx=0;
+for(var i=0;i<verseTimestamps.length-1;i++){
+if(progress>=verseTimestamps[i]&&progress<verseTimestamps[i+1]){idx=i;break;}
+}
 var lines=document.querySelectorAll('.verse-line');
 lines.forEach(function(l,i){
 if(i===idx){l.classList.add('active');l.scrollIntoView({behavior:'smooth',block:'center'});}
