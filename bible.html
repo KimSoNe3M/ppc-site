@@ -105,9 +105,6 @@ function loadChapter(){
 var book=bookSel.value;var ch=parseInt(chSel.value);
 var slug=book.toLowerCase().replace(/ /g,'-');
 for(var i=0;i<PLAN.length;i++){for(var j=0;j<PLAN[i].chapters.length;j++){if(PLAN[i].chapters[j].book===book){slug=PLAN[i].chapters[j].slug;break;}}if(slug!==book.toLowerCase().replace(/ /g,'-'))break;}
-var audioFile=getAudioFile(book,ch);
-var player=document.getElementById('audioPlayer');
-if(audioFile){player.src=audioFile;}
 document.getElementById('loadingDiv').style.display='block';
 document.getElementById('bibleText').innerHTML='';
 var fileMap={'1 Samuel':'1Samuel','2 Samuel':'2Samuel','1 Kings':'1Kings','2 Kings':'2Kings','1 Chronicles':'1Chronicles','2 Chronicles':'2Chronicles','1 Corinthians':'1Corinthians','2 Corinthians':'2Corinthians','1 Thessalonians':'1Thessalonians','2 Thessalonians':'2Thessalonians','1 Timothy':'1Timothy','2 Timothy':'2Timothy','1 Peter':'1Peter','2 Peter':'2Peter','1 John':'1John','2 John':'2John','3 John':'3John','Song of Songs':'SongofSolomon'};
@@ -139,6 +136,9 @@ html+='<div class="verse-line"><span class="verse-num">'+num+'</span>'+text+'</d
 }
 document.getElementById('bibleText').innerHTML=html;
 totalVerses=verses.length;
+var audioFile=getAudioFile(book,ch);
+var player=document.getElementById('audioPlayer');
+if(audioFile){player.src=audioFile;}
 }
 }catch(e){document.getElementById('bibleText').innerHTML='<div style="color:var(--text3);padding:20px;">Error loading text. Please refresh.</div>';}
 }
