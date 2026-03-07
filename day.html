@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prayer Priming Center — Daily Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Merriweather:wght@400;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--card:#ffffff;--blue:#1e3a5f;--blue-mid:#2a5080;--blue-light:#3a6a9a;--gold:#c49a3c;--gold-light:#d4aa4c;--green:#3d7a4a;--green-light:#4d9a5c;--text:#3a3328;--text2:#6b6050;--text3:#8a7f6e;--font-size:1.15rem}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-weight:600}
+.banner-header{width:100%;overflow:hidden;box-shadow:0 4px 20px rgba(30,58,95,0.25);position:relative}
+.banner-header img{width:100%;display:block;min-height:180px;max-height:400px;object-fit:cover;object-position:center center}
+.day-overlay{position:absolute;bottom:16px;left:50%;transform:translateX(-50%)}
+.day-badge{display:inline-block;padding:10px 40px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--blue);border-radius:24px;font-weight:900;font-size:1.2rem;letter-spacing:0.08em;box-shadow:0 3px 14px rgba(0,0,0,0.25)}
+.progress-section{max-width:960px;margin:20px auto 0;padding:0 16px}
+.progress-box{background:var(--card);border-radius:14px;padding:18px 24px;box-shadow:0 2px 10px rgba(58,51,40,0.08)}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-label span{font-weight:800;font-size:0.9rem;color:var(--blue)}
+.progress-bar-bg{width:100%;height:14px;background:#e8e0d0;border-radius:7px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--green),var(--green-light));transition:width 0.8s ease}
+.main{max-width:960px;margin:0 auto;padding:20px 16px}
+.section{background:var(--card);border-radius:14px;margin-bottom:24px;box-shadow:0 2px 12px rgba(58,51,40,0.1);overflow:hidden}
+.section-header{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);padding:18px 24px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.section-header .icon{font-size:1.5rem}
+.section-header .title{color:#fff;font-family:'Playfair Display',serif;font-weight:800;font-size:1.4rem;flex:1}
+.section-header .toggle{color:var(--gold);font-size:1.3rem;font-weight:800;transition:transform 0.3s}
+.section-header.open .toggle{transform:rotate(180deg)}
+.section-body{padding:28px 32px;display:none}
+.section-body.open{display:block}
+.font-controls{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:14px}
+.font-controls span{font-size:0.82rem;color:var(--text3);font-weight:700}
+.font-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--blue);background:var(--card);color:var(--blue);font-weight:900;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.font-btn:hover{background:var(--blue);color:#fff}
+.video-wrap{position:relative;width:100%;border-radius:10px;overflow:hidden;background:#000}
+.video-wrap video{width:100%;display:block;border-radius:10px}
+.chapter-heading{color:var(--blue);font-size:1.35rem;font-family:'Playfair Display',serif;font-weight:800;margin:28px 0 14px;padding-bottom:10px;border-bottom:2px solid #e4eef4}
+.chapter-heading:first-child{margin-top:0}
+.bible-scroll{max-height:60vh;overflow-y:auto;padding-right:10px}
+.verse-line{margin-bottom:10px;font-family:'Merriweather',serif;font-size:var(--font-size);line-height:2.0;color:var(--text);font-weight:400}
+.verse-num{color:var(--gold);font-size:0.7em;font-weight:800;margin-right:4px;vertical-align:super;font-family:'Nunito',sans-serif}
+.audio-box{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);border-radius:10px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.audio-box .lbl{color:var(--gold);font-size:0.95rem;font-weight:800}
+.audio-box audio{flex:1;min-width:200px;height:42px}
+.audio-status{color:rgba(255,255,255,0.85);font-size:0.85rem;width:100%;text-align:center;margin-top:4px;font-weight:700}
+.prayer-scroll{max-height:60vh;overflow-y:auto;padding-right:10px}
+.prayer-text{font-family:'Merriweather',serif;font-size:var(--font-size);line-height:2.2;color:var(--text);font-weight:400}
+.prayer-text p{margin-bottom:18px}
+.prayer-text .amen{font-weight:900;font-size:1.2em;color:var(--blue);margin-top:24px}
+.prayer-audio-box{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);border-radius:10px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.prayer-audio-box .lbl{color:var(--gold);font-size:0.95rem;font-weight:800}
+.prayer-audio-box audio{flex:1;min-width:200px;height:42px}
+.nav-row{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.nav-btn{padding:10px 24px;border:none;border-radius:20px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;background:linear-gradient(135deg,var(--blue),var(--blue-mid));color:var(--gold-light)}
+.nav-btn:hover{opacity:0.85}
+.nav-btn.list-btn{background:var(--card);color:var(--blue);border:2px solid var(--blue)}
+.not-available{text-align:center;padding:20px;color:var(--text3);font-style:italic;font-size:0.9rem}
+.loading{text-align:center;padding:30px;color:var(--text3);font-size:0.9rem}
+.loading::after{content:'';display:inline-block;width:20px;height:20px;border:3px solid var(--blue);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-left:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;padding:36px 16px;background:linear-gradient(135deg,#0d1f3c 0%,var(--blue) 40%,var(--blue-mid) 100%);margin-top:20px}
+.footer .footer-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff}
+.footer .footer-slogan{font-size:1.05rem;font-weight:700;color:var(--gold);margin-top:6px}
+.footer .footer-copy{font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:12px}
+@media(max-width:600px){.banner-header img{min-height:120px;max-height:200px}.day-badge{font-size:1rem;padding:8px 28px}.day-overlay{bottom:10px}.section-header .title{font-size:1.15rem}.section-body{padding:20px 16px}.main{padding:16px 10px}}
+</style>
+</head>
+<body>
+
+<div class="banner-header">
+<img src="banner.png" alt="Prayer Priming Center HQ" onerror="this.src='banner.jpeg'">
+</div>
+<div style="background:linear-gradient(135deg,#0d1f3c,var(--blue));padding:14px 20px;text-align:center">
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
+<a href="index.html" style="color:var(--gold-light);text-decoration:none;font-weight:800;font-size:0.95rem">🏠 Home</a>
+<div class="day-badge" id="dayBadge" style="margin:0">📖 DAY 1</div>
+<a href="program.html" style="color:var(--gold-light);text-decoration:none;font-weight:800;font-size:0.95rem">📋 Day List</a>
+</div>
+<div style="color:rgba(255,255,255,0.7);font-size:0.9rem;margin-top:8px;font-weight:700;letter-spacing:0.03em">20 Minutes a Day · Read the Entire Bible in 1 Year</div>
+</div>
+
+<div class="progress-section">
+<div class="progress-box">
+<div class="progress-label">
+<span>📈 Reading Progress</span>
+<span id="progressLabel">Day 1 / 365 (0.3%)</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill" id="progressFill"></div>
+</div>
+</div>
+</div>
+
+<div class="main">
+
+<div class="section">
+<div class="section-header open" onclick="toggleSection(this)">
+<span class="icon">🎬</span>
+<span class="title">Today's Introduction</span>
+<span class="toggle">▼</span>
+</div>
+<div class="section-body open" id="introBody">
+<div class="video-wrap">
+<video id="introVideo" controls preload="metadata">
+<source id="introSrc" type="video/mp4">
+Your browser does not support video.
+</video>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-header open" onclick="toggleSection(this)">
+<span class="icon">📖</span>
+<span class="title" id="bibleTitle">Bible Reading</span>
+<span class="toggle">▼</span>
+</div>
+<div class="section-body open" id="bibleBody">
+<div class="audio-box">
+<span class="lbl">🎵 Listen</span>
+<audio id="bibleAudio" controls></audio>
+<div class="audio-status" id="bibleAudioStatus"></div>
+</div>
+<div class="font-controls">
+<span>Font Size</span>
+<button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+<button class="font-btn" onclick="changeFontSize(1)">A+</button>
+</div>
+<div class="loading" id="bibleLoading">Loading Bible text</div>
+<div id="bibleText" class="bible-scroll"></div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-header open" onclick="toggleSection(this)">
+<span class="icon">🙏</span>
+<span class="title" id="prayerTitle">Today's Prayer</span>
+<span class="toggle">▼</span>
+</div>
+<div class="section-body open" id="prayerBody">
+<div class="prayer-audio-box" id="prayerAudioBox">
+<span class="lbl">🎧 Prayer Audio</span>
+<audio id="prayerAudio" controls preload="metadata"></audio>
+</div>
+<div class="font-controls">
+<span>Font Size</span>
+<button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+<button class="font-btn" onclick="changeFontSize(1)">A+</button>
+</div>
+<div class="prayer-scroll">
+<div class="prayer-text" id="prayerText"><div class="loading">Loading prayer</div></div>
+</div>
+</div>
+</div>
+
+<div class="nav-row">
+<a class="nav-btn" id="prevLink">◀ Previous Day</a>
+<a class="nav-btn list-btn" href="program.html">📋 Day List</a>
+<a class="nav-btn" id="nextLink">Next Day ▶</a>
+</div>
+
+</div>
+
+<div class="footer">
+<div class="footer-name">Prayer Chain Global</div>
+<div class="footer-slogan" style="font-size:1.3rem">Building 3 Million Prayer Army</div>
+<div class="footer-copy">© 2026 Prayer Priming Center</div>
+</div>
+
+<script src="plan365.js"></script>
+<script>
+function toggleSection(header){
+header.classList.toggle('open');
+header.nextElementSibling.classList.toggle('open');
+}
+var currentSize=1.15;
+function changeFontSize(dir){
+currentSize=Math.max(0.8,Math.min(2.0,currentSize+dir*0.15));
+document.documentElement.style.setProperty('--font-size',currentSize+'rem');
+}
+
+var params=new URLSearchParams(window.location.search);
+var dayNum=parseInt(params.get('d'))||1;
+if(dayNum<1)dayNum=1;if(dayNum>365)dayNum=365;
+var dayData=PLAN[dayNum-1];
+var chapters=dayData.chapters;
+
+document.title='Prayer Priming Center — Day '+dayNum;
+document.getElementById('dayBadge').textContent='📖 DAY '+dayNum;
+var pct=(dayNum/365*100).toFixed(1);
+document.getElementById('progressLabel').textContent='Day '+dayNum+' / 365 ('+pct+'%)';
+document.getElementById('progressFill').style.width=pct+'%';
+document.getElementById('bibleTitle').textContent='Bible Reading — '+dayData.label;
+document.getElementById('prayerTitle').textContent="Today's Prayer — Day "+dayNum;
+
+// Navigation
+var prevLink=document.getElementById('prevLink');
+var nextLink=document.getElementById('nextLink');
+if(dayNum>1){prevLink.href='day.html?d='+(dayNum-1);}else{prevLink.style.opacity='0.3';prevLink.style.pointerEvents='none';}
+if(dayNum<365){nextLink.href='day.html?d='+(dayNum+1);}else{nextLink.style.opacity='0.3';nextLink.style.pointerEvents='none';}
+
+// Intro video
+var introVideo=document.getElementById('introVideo');
+var introSrc=document.getElementById('introSrc');
+introSrc.src='intro'+dayNum+'.mp4';
+if(dayNum===1)introSrc.src=decodeURI('%EC%B0%BD%EC%84%B8%EA%B8%B01-2%20%EC%9D%B8%ED%8A%B8%EB%A1%9C%20%EC%98%81%EC%96%B4.mp4');
+introVideo.load();
+introVideo.onerror=function(){
+document.getElementById('introBody').innerHTML='<div class="not-available">Intro video coming soon for Day '+dayNum+'</div>';
+};
+
+// Audio playlist
+var audioURLs=[];
+for(var i=0;i<chapters.length;i++){
+var f=getAudioFile(chapters[i].book,chapters[i].ch);
+if(f)audioURLs.push({url:f,label:chapters[i].book+' '+chapters[i].ch});
+}
+var curIdx=0;
+var ap=document.getElementById('bibleAudio');
+var st=document.getElementById('bibleAudioStatus');
+if(audioURLs.length>0){
+ap.src=audioURLs[0].url;
+st.textContent='▶ '+audioURLs[0].label+' (1/'+audioURLs.length+')';
+ap.onended=function(){
+curIdx++;
+if(curIdx<audioURLs.length){ap.src=audioURLs[curIdx].url;st.textContent='▶ '+audioURLs[curIdx].label+' ('+(curIdx+1)+'/'+audioURLs.length+')';ap.play().catch(function(){});}
+else{st.textContent='✓ All '+audioURLs.length+' chapters finished!';}
+};
+ap.onerror=function(){curIdx++;if(curIdx<audioURLs.length){ap.src=audioURLs[curIdx].url;st.textContent='▶ '+audioURLs[curIdx].label+' ('+(curIdx+1)+'/'+audioURLs.length+')';ap.play().catch(function(){});}};
+}
+
+// Bible text - using XHR like yesterday's working code
+var results=[];var loaded=0;
+for(var c=0;c<chapters.length;c++){
+(function(ci){
+var ch=chapters[ci];
+var url='https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/en-kjv/books/'+ch.slug+'/chapters/'+ch.ch+'.json';
+var xhr=new XMLHttpRequest();
+xhr.open('GET',url,true);
+xhr.onload=function(){
+if(xhr.status===200){
+try{var data=JSON.parse(xhr.responseText);results[ci]={book:ch.book,ch:ch.ch,verses:data.data||data};}
+catch(e){results[ci]={book:ch.book,ch:ch.ch,verses:[]};}
+}else{results[ci]={book:ch.book,ch:ch.ch,verses:[]};}
+loaded++;if(loaded===chapters.length)renderBible(results);
+};
+xhr.onerror=function(){results[ci]={book:ch.book,ch:ch.ch,verses:[]};loaded++;if(loaded===chapters.length)renderBible(results);};
+xhr.send();
+})(c);
+}
+
+function renderBible(results){
+document.getElementById('bibleLoading').style.display='none';
+var html='';
+for(var i=0;i<results.length;i++){
+var r=results[i];
+html+='<div class="chapter-heading">'+r.book+' '+r.ch+'</div>';
+if(Array.isArray(r.verses)){
+for(var v=0;v<r.verses.length;v++){
+var ve=r.verses[v];var num=ve.verse||ve.number||(v+1);var text=ve.text||ve.content||'';
+text=text.replace(/\s+/g,' ').trim();
+html+='<div class="verse-line"><span class="verse-num">'+num+'</span>'+text+'</div>';
+}}
+if(!r.verses||r.verses.length===0){html+='<div style="color:var(--text3);font-size:0.9rem;padding:8px 0;">Text loading failed. Please refresh.</div>';}
+}
+document.getElementById('bibleText').innerHTML=html;
+}
+
+// Prayer audio
+var prayerAudio=document.getElementById('prayerAudio');
+if(dayNum===1){prayerAudio.src='\uC601\uC5B4\uAE30\uB3C4 \uCCAB\uB0A0.wav';}
+else{prayerAudio.src='pray'+dayNum+'.mp3';}
+prayerAudio.onerror=function(){
+document.getElementById('prayerAudioBox').innerHTML='<div class="not-available">Prayer audio coming soon</div>';
+};
+
+// Prayer text
+var prayerTextDiv=document.getElementById('prayerText');
+if(dayNum===1){
+prayerTextDiv.innerHTML='<p>God…<br>This still feels unfamiliar. I\'m not even sure if this is the right way to call You.<br>Today, for the first time, I am praying to You.<br>I have never called on You before, and I have never prayed.<br>I have never read the Bible, nor have I even held one.<br>To be honest… I\'m still not sure if this is the right thing to do.<br>I\'m not certain that You are really listening to my prayer.<br>But today, I decided to begin.<br>Someone recommended this training to me, and I chose to try.</p><p>In truth, religion has always felt distant from my life.<br>I have never gone to church, and when I saw people praying, I didn\'t understand it.<br>"What are they saying to a God they cannot even see?"<br>That\'s what I used to think.<br>And yet now, here I am doing the same thing.<br>It feels ironic.</p><p>God, if You truly exist…<br>If You are really listening to my prayer…<br>Please help me.<br>I know nothing about You.<br>I don\'t know what You are like, or even how I should pray.<br>I don\'t know if I\'m supposed to say only good and proper words,<br>or if I\'m allowed to speak honestly.<br>So… I decided to speak just as I am.</p><p>People say<br>that You are love.<br>They say You care for us.<br>Is that really true?<br>Do You really care for someone like me?<br>I am not a special person,<br>and I have not lived a particularly good life.<br>Is it really okay for someone like me to pray?</p><p>But there is one thing I do know.<br>I know that I have begun today.<br>I have started this training of praying to You.<br>It\'s my first time, and I\'m clumsy. I\'m not even sure what to say.<br>I cannot speak beautifully like pastors do.<br>I don\'t know how to quote Scripture.<br>I can only speak what is in my heart.</p><p>Still, I say this:<br>God, please move my heart.<br>God, please give me understanding.<br>Help me to know You.<br>While I continue this training,<br>please allow me to come to know You, little by little.</p><p>I don\'t know whether this prayer reaches heaven.<br>I don\'t know if this is the right way to pray.<br>Maybe I am just whispering to myself.<br>Maybe no one is listening.<br>But today, I have begun.</p><p>Tomorrow, I will call on You again.<br>And the day after that, and the next…<br>It may feel awkward at first,<br>but if I continue, perhaps it will become more familiar.<br>And someday…<br>I hope the day will come when I truly know You.<br>I don\'t have certainty, but I do have hope.<br>And with that hope, I begin today.</p><p>Before I finish this prayer…<br>I was told to say this, just as I learned today.<br>I don\'t fully understand what it means,<br>but even awkwardly, I will say it:</p><p class="amen">I pray in the name of Jesus.<br>Amen.</p>';
+}else{
+var xhr2=new XMLHttpRequest();
+xhr2.open('GET','pray'+dayNum+'.txt',true);
+xhr2.onload=function(){
+if(xhr2.status===200&&xhr2.responseText){
+var lines=xhr2.responseText.split('\n\n');
+var html='';
+for(var i=0;i<lines.length;i++){html+='<p>'+lines[i].replace(/\n/g,'<br>')+'</p>';}
+prayerTextDiv.innerHTML=html;
+}else{prayerTextDiv.innerHTML='<div class="not-available">Prayer text coming soon for Day '+dayNum+'</div>';}
+};
+xhr2.onerror=function(){prayerTextDiv.innerHTML='<div class="not-available">Prayer text coming soon for Day '+dayNum+'</div>';};
+xhr2.send();
+}
+</script>
+</body>
+</html>

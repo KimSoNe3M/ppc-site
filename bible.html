@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Read the Bible — KJV | Prayer Priming Center HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Merriweather:wght@400;700;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f0e8;--card:#ffffff;--blue:#1e3a5f;--blue-mid:#2a5080;--gold:#c49a3c;--gold-light:#d4aa4c;--text:#3a3328;--text2:#6b6050;--text3:#8a7f6e;--font-size:1.15rem}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-weight:600}
+.banner-header{width:100%;overflow:hidden;box-shadow:0 4px 20px rgba(30,58,95,0.25)}
+.banner-header img{width:100%;display:block}
+.top-nav{background:linear-gradient(135deg,var(--blue),var(--blue-mid));padding:14px 20px;text-align:center}
+.top-nav a{color:var(--gold-light);text-decoration:none;font-weight:700;font-size:0.9rem}
+.top-nav h1{color:#fff;font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;margin-top:4px}
+.main{max-width:960px;margin:0 auto;padding:20px 16px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.controls select{flex:1;min-width:140px;padding:12px 16px;border:2px solid #e4eef4;border-radius:10px;background:var(--card);font-family:'Nunito',sans-serif;font-size:1rem;color:var(--blue);font-weight:700;cursor:pointer}
+.controls select:focus{outline:none;border-color:var(--gold)}
+.font-controls{display:flex;align-items:center;gap:8px}
+.font-controls span{font-size:0.82rem;color:var(--text3);font-weight:700}
+.font-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--blue);background:var(--card);color:var(--blue);font-weight:900;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.font-btn:hover{background:var(--blue);color:#fff}
+.audio-box{background:linear-gradient(135deg,var(--blue),var(--blue-mid));border-radius:10px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.audio-box .lbl{color:var(--gold);font-size:0.95rem;font-weight:800}
+.audio-box audio{flex:1;min-width:200px;height:42px}
+.nav-row{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
+.nav-btn{padding:10px 24px;border:none;border-radius:20px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;text-decoration:none;transition:all 0.2s;background:linear-gradient(135deg,var(--blue),var(--blue-mid));color:var(--gold-light)}
+.nav-btn:hover{opacity:0.85}
+.section{background:var(--card);border-radius:14px;margin-bottom:24px;box-shadow:0 2px 12px rgba(58,51,40,0.1);overflow:hidden}
+.section-body{padding:28px 32px}
+.chapter-heading{color:var(--blue);font-size:1.35rem;font-family:'Playfair Display',serif;font-weight:800;margin:28px 0 14px;padding-bottom:10px;border-bottom:2px solid #e4eef4}
+.chapter-heading:first-child{margin-top:0}
+.bible-scroll{max-height:60vh;overflow-y:auto;padding-right:10px}
+.verse-line{margin-bottom:10px;font-family:'Merriweather',serif;font-size:var(--font-size);line-height:2.0;color:var(--text);font-weight:400;transition:background 0.3s,padding 0.3s;border-radius:6px;padding:4px 8px}
+.verse-line.active{background:linear-gradient(135deg,rgba(196,154,60,0.25),rgba(196,154,60,0.1));border-left:4px solid var(--gold);padding-left:12px;color:var(--blue)}
+.verse-num{color:var(--gold);font-size:0.7em;font-weight:800;margin-right:4px;vertical-align:super;font-family:'Nunito',sans-serif}
+.loading{text-align:center;padding:30px;color:var(--text3);font-size:0.9rem}
+.loading::after{content:'';display:inline-block;width:20px;height:20px;border:3px solid var(--blue);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin-left:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.footer{text-align:center;padding:36px 16px;background:linear-gradient(135deg,#0d1f3c 0%,var(--blue) 40%,var(--blue-mid) 100%);margin-top:20px}
+.footer .footer-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff}
+.footer .footer-slogan{font-size:1.05rem;font-weight:700;color:var(--gold);margin-top:6px}
+.footer .footer-copy{font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:12px}
+@media(max-width:600px){.section-body{padding:20px 16px}.main{padding:16px 10px}}
+</style>
+</head>
+<body>
+<div class="banner-header">
+<img src="banner.png" alt="Prayer Priming Center HQ" onerror="this.src='banner.jpeg'">
+</div>
+<div class="top-nav">
+<a href="index.html">← Home</a>
+<h1>📖 Read the Bible — KJV</h1>
+</div>
+<div class="main">
+<div class="controls">
+<select id="bookSelect"></select>
+<select id="chapterSelect"></select>
+<div class="font-controls">
+<span>Font Size</span>
+<button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+<button class="font-btn" onclick="changeFontSize(1)">A+</button>
+</div>
+</div>
+<div class="audio-box">
+<span class="lbl">🎵 Listen</span>
+<audio id="audioPlayer" controls></audio>
+</div>
+<div class="nav-row">
+<button class="nav-btn" onclick="goChapter(-1)">◀ Previous</button>
+<button class="nav-btn" onclick="goChapter(1)">Next ▶</button>
+</div>
+<div class="section">
+<div class="section-body">
+<div class="loading" id="loadingDiv">Loading Bible text</div>
+<div id="bibleText" class="bible-scroll"></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<div class="footer-name">Prayer Chain Global</div>
+<div class="footer-slogan" style="font-size:1.3rem">Building 3 Million Prayer Army</div>
+<div class="footer-copy">© 2026 Prayer Priming Center</div>
+</div>
+<script src="plan365.js"></script>
+<script>
+var currentSize=1.15;
+function changeFontSize(dir){
+currentSize=Math.max(0.8,Math.min(2.0,currentSize+dir*0.15));
+document.documentElement.style.setProperty('--font-size',currentSize+'rem');
+}
+var bookSel=document.getElementById('bookSelect');
+var chSel=document.getElementById('chapterSelect');
+BOOKS_ORDER.forEach(function(b){var o=document.createElement('option');o.value=b;o.textContent=b;bookSel.appendChild(o);});
+bookSel.addEventListener('change',function(){updateChapters();loadChapter();});
+chSel.addEventListener('change',function(){loadChapter();});
+function updateChapters(){
+var book=bookSel.value;var n=BOOK_CHAPTERS[book]||1;
+chSel.innerHTML='';
+for(var i=1;i<=n;i++){var o=document.createElement('option');o.value=i;o.textContent='Chapter '+i;chSel.appendChild(o);}
+}
+function loadChapter(){
+var book=bookSel.value;var ch=parseInt(chSel.value);
+var slug=book.toLowerCase().replace(/ /g,'-');
+for(var i=0;i<PLAN.length;i++){for(var j=0;j<PLAN[i].chapters.length;j++){if(PLAN[i].chapters[j].book===book){slug=PLAN[i].chapters[j].slug;break;}}if(slug!==book.toLowerCase().replace(/ /g,'-'))break;}
+var audioFile=getAudioFile(book,ch);
+var player=document.getElementById('audioPlayer');
+if(audioFile){player.src=audioFile;}
+document.getElementById('loadingDiv').style.display='block';
+document.getElementById('bibleText').innerHTML='';
+var fileMap={'1 Samuel':'1Samuel','2 Samuel':'2Samuel','1 Kings':'1Kings','2 Kings':'2Kings','1 Chronicles':'1Chronicles','2 Chronicles':'2Chronicles','1 Corinthians':'1Corinthians','2 Corinthians':'2Corinthians','1 Thessalonians':'1Thessalonians','2 Thessalonians':'2Thessalonians','1 Timothy':'1Timothy','2 Timothy':'2Timothy','1 Peter':'1Peter','2 Peter':'2Peter','1 John':'1John','2 John':'2John','3 John':'3John','Song of Songs':'SongofSolomon'};
+var fileName=fileMap[book]||book;
+var url='bible-json/'+fileName+'.json';
+var xhr=new XMLHttpRequest();
+xhr.open('GET',url,true);
+xhr.onload=function(){
+document.getElementById('loadingDiv').style.display='none';
+if(xhr.status===200){
+try{
+var raw=JSON.parse(xhr.responseText);
+var verses=null;
+if(raw.chapters){
+var chapters=raw.chapters;
+for(var c=0;c<chapters.length;c++){
+if(parseInt(chapters[c].chapter)===ch){verses=chapters[c].verses;break;}
+}
+}else{
+var arr=raw.data||raw;
+if(Array.isArray(arr))verses=arr;
+}
+if(verses&&verses.length>0){
+var html='<div class="chapter-heading">'+book+' '+ch+'</div>';
+for(var v=0;v<verses.length;v++){
+var ve=verses[v];var num=ve.verse||ve.number||(v+1);var text=ve.text||ve.content||'';
+text=text.replace(/\s+/g,' ').trim();
+html+='<div class="verse-line"><span class="verse-num">'+num+'</span>'+text+'</div>';
+}
+document.getElementById('bibleText').innerHTML=html;
+totalVerses=verses.length;
+}
+}catch(e){document.getElementById('bibleText').innerHTML='<div style="color:var(--text3);padding:20px;">Error loading text. Please refresh.</div>';}
+}
+};
+xhr.onerror=function(){
+document.getElementById('loadingDiv').style.display='none';
+document.getElementById('bibleText').innerHTML='<div style="color:var(--text3);padding:20px;">Could not load text. Please check connection.</div>';
+};
+xhr.send();
+}
+var totalVerses=0;
+var highlightInterval=null;
+function startHighlight(){
+var player=document.getElementById('audioPlayer');
+if(highlightInterval)clearInterval(highlightInterval);
+highlightInterval=setInterval(function(){
+if(player.paused||player.duration===0)return;
+var progress=player.currentTime/player.duration;
+var idx=Math.floor(progress*totalVerses);
+var lines=document.querySelectorAll('.verse-line');
+lines.forEach(function(l,i){
+if(i===idx){l.classList.add('active');l.scrollIntoView({behavior:'smooth',block:'center'});}
+else{l.classList.remove('active');}
+});
+},500);
+}
+document.getElementById('audioPlayer').addEventListener('play',startHighlight);
+document.getElementById('audioPlayer').addEventListener('pause',function(){if(highlightInterval)clearInterval(highlightInterval);});
+document.getElementById('audioPlayer').addEventListener('ended',function(){if(highlightInterval)clearInterval(highlightInterval);document.querySelectorAll('.verse-line').forEach(function(l){l.classList.remove('active');});});
+function goChapter(dir){
+var ch=parseInt(chSel.value)+dir;var book=bookSel.value;
+if(ch<1){var idx=BOOKS_ORDER.indexOf(book)-1;if(idx<0)return;bookSel.value=BOOKS_ORDER[idx];updateChapters();chSel.value=BOOK_CHAPTERS[BOOKS_ORDER[idx]];}
+else if(ch>BOOK_CHAPTERS[book]){var idx=BOOKS_ORDER.indexOf(book)+1;if(idx>=BOOKS_ORDER.length)return;bookSel.value=BOOKS_ORDER[idx];updateChapters();chSel.value=1;}
+else{chSel.value=ch;}
+loadChapter();window.scrollTo(0,0);
+}
+var params=new URLSearchParams(window.location.search);
+if(params.get('book'))bookSel.value=params.get('book');
+updateChapters();
+if(params.get('ch'))chSel.value=params.get('ch');
+loadChapter();
+</script>
+</body>
+</html>
