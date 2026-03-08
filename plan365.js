@@ -34,3 +34,19 @@ if(!prefix)return null;
 var num=String(ch).padStart(3,'0');
 return 'https://raw.githubusercontent.com/KimSoNe3M/kjv-audio/main/'+prefix+num+'.mp3';
 }
+
+// =====================================================
+// 날짜별 유튜브 ID 관리표
+// 유튜브 URL: https://youtu.be/XXXXX  →  ID = XXXXX 부분만 입력
+// =====================================================
+var INTRO_YOUTUBE = {
+  1: "_lnBQBPhd3A"
+  // 2: "여기에ID입력",
+  // 3: "여기에ID입력"
+};
+
+var PRAYER_YOUTUBE = {
+  1: "UkMZg_Iy3pc"
+  // 2: "여기에ID입력",
+  // 3: "여기에ID입력"
+};

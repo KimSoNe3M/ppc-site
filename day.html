@@ -100,12 +100,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line
 <span class="toggle">▼</span>
 </div>
 <div class="section-body open" id="introBody">
-<div class="video-wrap">
-<video id="introVideo" controls preload="metadata">
-<source id="introSrc" type="video/mp4">
-Your browser does not support video.
-</video>
-</div>
+<div id="introBody2"></div>
 </div>
 </div>
 
@@ -138,10 +133,7 @@ Your browser does not support video.
 <span class="toggle">▼</span>
 </div>
 <div class="section-body open" id="prayerBody">
-<div class="prayer-audio-box" id="prayerAudioBox">
-<span class="lbl">🎧 Prayer Audio</span>
-<audio id="prayerAudio" controls preload="metadata"></audio>
-</div>
+<div id="prayerAudioBox"></div>
 <div class="font-controls">
 <span>Font Size</span>
 <button class="font-btn" onclick="changeFontSize(-1)">A-</button>
@@ -199,15 +191,13 @@ var nextLink=document.getElementById('nextLink');
 if(dayNum>1){prevLink.href='day.html?d='+(dayNum-1);}else{prevLink.style.opacity='0.3';prevLink.style.pointerEvents='none';}
 if(dayNum<365){nextLink.href='day.html?d='+(dayNum+1);}else{nextLink.style.opacity='0.3';nextLink.style.pointerEvents='none';}
 
-// Intro video
-var introVideo=document.getElementById('introVideo');
-var introSrc=document.getElementById('introSrc');
-introSrc.src='intro'+dayNum+'.mp4';
-if(dayNum===1)introSrc.src=decodeURI('%EC%B0%BD%EC%84%B8%EA%B8%B01-2%20%EC%9D%B8%ED%8A%B8%EB%A1%9C%20%EC%98%81%EC%96%B4.mp4');
-introVideo.load();
-introVideo.onerror=function(){
-document.getElementById('introBody').innerHTML='<div class="not-available">Intro video coming soon for Day '+dayNum+'</div>';
-};
+// Intro video (YouTube)
+var introId=INTRO_YOUTUBE[dayNum];
+if(introId){
+document.getElementById('introBody2').innerHTML='<div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;"><iframe src="https://www.youtube.com/embed/'+introId+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div>';
+}else{
+document.getElementById('introBody2').innerHTML='<div class="not-available">Intro video coming soon for Day '+dayNum+'</div>';
+}
 
 // Audio playlist
 var audioURLs=[];
@@ -266,13 +256,13 @@ if(!r.verses||r.verses.length===0){html+='<div style="color:var(--text3);font-si
 document.getElementById('bibleText').innerHTML=html;
 }
 
-// Prayer audio
-var prayerAudio=document.getElementById('prayerAudio');
-if(dayNum===1){prayerAudio.src='\uC601\uC5B4\uAE30\uB3C4 \uCCAB\uB0A0.wav';}
-else{prayerAudio.src='pray'+dayNum+'.mp3';}
-prayerAudio.onerror=function(){
+// Prayer audio (YouTube)
+var prayerId=PRAYER_YOUTUBE[dayNum];
+if(prayerId){
+document.getElementById('prayerAudioBox').innerHTML='<div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;"><iframe src="https://www.youtube.com/embed/'+prayerId+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div>';
+}else{
 document.getElementById('prayerAudioBox').innerHTML='<div class="not-available">Prayer audio coming soon</div>';
-};
+}
 
 // Prayer text
 var prayerTextDiv=document.getElementById('prayerText');
